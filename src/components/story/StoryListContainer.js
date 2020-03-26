@@ -18,7 +18,7 @@ export function StoryListContainer() {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.row}>
         <button
           className={styles.button}

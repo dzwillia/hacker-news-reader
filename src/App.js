@@ -6,9 +6,14 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Hacker News Reader</h1>
-        <StoryListContainer />
+        <nav className="app-header-inner">
+          <a href="/" className="app-header-link app-header-logo">Y</a>
+          <a href="/" className="app-header-link">Hacker News</a>
+        </nav>
       </header>
+      <div className="app-content">
+        <StoryListContainer />
+      </div>
     </div>
   )
 }

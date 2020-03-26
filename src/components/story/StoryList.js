@@ -1,5 +1,6 @@
 import React from 'react'
 import { StoryListItem } from './StoryListItem'
+import styles from './Story.module.css'
 
 export function StoryList(props) {
   const items = props.items
@@ -11,8 +12,10 @@ export function StoryList(props) {
   )
 
   return (
-    <div>
-      {storyItems}
+    <div className={styles.list}>
+      <ul>
+        {storyItems}
+      </ul>
     </div>
   )
 }
