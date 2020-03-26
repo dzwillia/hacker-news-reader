@@ -33,18 +33,33 @@ const buildTestItems = count => {
 export const slice = createSlice({
   name: 'story',
   initialState: {
-    items: buildTestItems(10)
+    items: buildTestItems(4)
   },
   reducers: {
     addStory: (state, action) => {
       // append the story to the items array
       state.items = [...state.items, action.payload]
+    },
+    removeStory: (state, action) => {
+      // remove the story at the specified index from the items array
+      const idx = action.payload
+
+      if (idx >= 0 && idx < state.items.length) {
+        // remove the item from the array
+        state.items = [
+          ...state.items.slice(0, idx),
+          ...state.items.slice(idx + 1)
+        ]
+      } else {
+        // index is out-of-bounds; bail out
+        return state
+      }
     }
   },
 })
 
 // actions
-export const { addStory } = slice.actions
+export const { addStory, removeStory } = slice.actions
 
 // selectors
 export const selectItems = state => state.story.items
