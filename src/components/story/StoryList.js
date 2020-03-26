@@ -1,10 +1,10 @@
 import React from 'react'
-import { StoryItem } from './StoryItem'
+import { StoryListItem } from './StoryListItem'
 
-export function StoryItemList(props) {
+export function StoryList(props) {
   const items = props.items
   const storyItems = items.map(item =>
-    <StoryItem
+    <StoryListItem
       key={item.id.toString()}
       item={item}
     />
