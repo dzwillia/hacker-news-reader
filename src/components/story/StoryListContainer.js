@@ -2,8 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { StoryList } from './StoryList'
 import {
-  addStory,
-  removeStory,
   selectItems,
 } from './storySlice'
 import styles from './Story.module.css'
