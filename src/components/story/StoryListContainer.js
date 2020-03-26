@@ -29,10 +29,10 @@ export function StoryListContainer() {
         </button>
         <button
           className={styles.button}
-          aria-label="Remove last story"
+          aria-label="Remove story"
           onClick={() => dispatch(removeStory(items.length - 1))}
         >
-          Remove last story
+          Remove story
         </button>
       </div>
       <StoryList items={items} />
