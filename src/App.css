@@ -23,9 +23,9 @@
   color: #fff;
   max-width: 800px;
   margin: 0 auto;
-  letter-spacing: 0.0375em;
+  letter-spacing: 0.04em;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .app-header-link {
@@ -38,8 +38,7 @@
   border: 2px solid #fff;
   margin-right: 0.75em;
   font-weight: bold;
-  font-size: 20px;
-  padding: 4px 6px;
+  padding: 4px 7px 5px;
 }
 
 .app-content {
