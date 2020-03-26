@@ -1,4 +1,5 @@
 import React from 'react'
+import { StoryListContainer } from './components/story/StoryListContainer'
 import './App.css'
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1>Hacker News Reader</h1>
+        <StoryListContainer />
       </header>
     </div>
   )
