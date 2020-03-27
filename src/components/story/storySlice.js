@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchNewStoryIds } from '../../app/api'
+import { fetchNewStoryIds, fetchItem } from '../../app/api'
 
 /*
   Story object descriptor:
@@ -22,14 +22,6 @@ import { fetchNewStoryIds } from '../../app/api'
     descendants: In the case of stories or polls, the total comment count.
   }
 */
-
-const buildTestItems = count => {
-  let arr = []
-  for (var i = 0; i < count; ++i) {
-    arr.push({ id: i, title: `Item ${i+1}` })
-  }
-  return arr
-}
 
 export const slice = createSlice({
   name: 'story',
@@ -75,11 +67,22 @@ export const slice = createSlice({
 export const { addIds, addStory, removeStory } = slice.actions
 
 // thunks
+export const fetchNewStory = id => dispatch => {
+  return fetchItem(id).then(response => {
+    dispatch(addStory(response))
+  }).catch(error => {
+    // TODO
+  })
+}
+
 export const fetchNewStories = () => dispatch => {
   fetchNewStoryIds().then(response => {
     dispatch(addIds(response))
+    for (var i = 0; i < 10; ++i) {
+      dispatch(fetchNewStory(response[i]))
+    }
   }).catch(error => {
-
+    // TODO
   })
 }
 

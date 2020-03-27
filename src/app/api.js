@@ -15,3 +15,7 @@ function fetchChild(child) {
 export function fetchNewStoryIds() {
   return fetchChild('newstories')
 }
+
+export function fetchItem(id) {
+  return fetchChild(`item/${id}`)
+}
