@@ -90,17 +90,9 @@ export const fetchNewStory = id => dispatch => {
 export const fetchNewStories = () => dispatch => {
   fetchNewStoryIds().then(response => {
     dispatch(addIds(response))
-    for (var i = 0; i < 10; ++i) {
-      dispatch(fetchNewStory(response[i]))
-    }
+    dispatch(fetchNewStory(response[0]))
   }).catch(error => {
     // TODO
-  })
-}
-
-export const watchForChanges = () => dispatch => {
-  watchNewStoriesForUpdates(item => {
-    dispatch(addOrUpdateStory(item))
   })
 }
 
