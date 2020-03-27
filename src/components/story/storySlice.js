@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { fetchNewStoryIds } from '../../app/api'
 
 /*
   Story object descriptor:
@@ -33,12 +34,24 @@ const buildTestItems = count => {
 export const slice = createSlice({
   name: 'story',
   initialState: {
-    items: buildTestItems(4)
+    ids: [],
+    items: [],
   },
   reducers: {
+    addIds: (state, action) => {
+      // append ids to the ids array
+      state.ids = state.ids.concat(action.payload)
+
+      // remove duplicate ids
+      state.ids.splice(0, state.ids.length, ...(new Set(state.ids)))
+    },
     addStory: (state, action) => {
       // append the story to the items array
-      state.items = [...state.items, action.payload]
+      const new_item = action.payload
+      const already_exists = state.items.find(item => item.id == new_item.id)
+      if (!already_exists) {
+        state.items = [...state.items, new_item]
+      }
     },
     removeStory: (state, action) => {
       // remove the story at the specified index from the items array
@@ -54,12 +67,21 @@ export const slice = createSlice({
         // index is out-of-bounds; bail out
         return state
       }
-    }
+    },
   },
 })
 
 // actions
-export const { addStory, removeStory } = slice.actions
+export const { addIds, addStory, removeStory } = slice.actions
+
+// thunks
+export const fetchNewStories = () => dispatch => {
+  fetchNewStoryIds().then(response => {
+    dispatch(addIds(response))
+  }).catch(error => {
+
+  })
+}
 
 // selectors
 export const selectItems = state => state.story.items
