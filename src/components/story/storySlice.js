@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  fetchNewStoryIds,
-  fetchItem,
-  watchNewStoriesForUpdates,
-} from '../../app/api'
+import { fetchNewStoryIds, fetchItem } from '../../app/api'
 
 /*
   Story object descriptor:
@@ -41,19 +37,12 @@ export const slice = createSlice({
       // remove duplicate ids
       state.ids.splice(0, state.ids.length, ...(new Set(state.ids)))
     },
-    addOrUpdateStory: (state, action) => {
-      // updated existing stories or append new stories to the items array
+    addStory: (state, action) => {
+      // append the story to the items array
       const new_item = action.payload
-      const idx = state.items.findIndex(item => item.id == new_item.id)
-      if (idx >= 0) {
-        // update the story
-        state.items = [
-          ...state.items.slice(0, idx),
-          Object.assign({}, state.items[idx], new_item),
-          ...state.items.slice(idx + 1)
-        ]
-      } else {
-        // add the story
+      const already_exists = state.items.find(item => item.id === new_item.id)
+
+      if (!already_exists) {
         state.items = [...state.items, new_item]
       }
     },
@@ -76,12 +65,12 @@ export const slice = createSlice({
 })
 
 // actions
-export const { addIds, addOrUpdateStory, removeStory } = slice.actions
+export const { addIds, addStory, removeStory } = slice.actions
 
 // thunks
 export const fetchNewStory = id => dispatch => {
-  fetchItem(id).then(response => {
-    dispatch(addOrUpdateStory(response))
+  return fetchItem(id).then(response => {
+    dispatch(addStory(response))
   }).catch(error => {
     // TODO
   })
@@ -90,7 +79,9 @@ export const fetchNewStory = id => dispatch => {
 export const fetchNewStories = () => dispatch => {
   fetchNewStoryIds().then(response => {
     dispatch(addIds(response))
-    dispatch(fetchNewStory(response[0]))
+    for (var i = 0; i < 10; ++i) {
+      dispatch(fetchNewStory(response[i]))
+    }
   }).catch(error => {
     // TODO
   })
